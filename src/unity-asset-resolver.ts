@@ -217,8 +217,11 @@ export function getPackageStats(packageInfo: UnityPackageInfo): {
   for (const asset of Array.from(packageInfo.assets.values())) {
     totalSize += asset.assetData.length;
 
+    const pathParts = asset.assetPath.split('.');
     const extension =
-      asset.assetPath.split('.').pop()?.toLowerCase() || 'unknown';
+      pathParts.length > 1
+        ? pathParts.pop()?.toLowerCase() || 'unknown'
+        : 'unknown';
     assetTypes[extension] = (assetTypes[extension] || 0) + 1;
   }
 
